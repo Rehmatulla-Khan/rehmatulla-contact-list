@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomNumberGenrator";
 
 const ContactInfoCard = () => {
   const darkMode = useTheme();
+  const imgURL = useMemo(
+    () =>
+      `https://avatars.dicebear.com/api/bottts/${randomNumberGenerator()}.svg`,
+    []
+  );
 
   return (
     <div className={`ui fluid link card  ${darkMode ? "inverted" : ""}`}>
       <div className="ui basic segment">
         <div className="ui image medium centered">
-          <img
-            alt="avatar"
-            src={`https://avatars.dicebear.com/api/bottts/${randomNumberGenerator}
-            .svg`}
-          />
+          <img alt="avatar" src={imgURL} />
         </div>
       </div>
       <div className="content">

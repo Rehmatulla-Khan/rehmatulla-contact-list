@@ -4,6 +4,7 @@ import {
   useTheme,
   useThemeUpdate,
 } from "../../components/themeProvider/ThemeProvider";
+import ContactInfoCard from "../../components/card/contactInfoCard/ContactInfoCard";
 
 const Home = () => {
   const darkMode = useTheme();
@@ -12,28 +13,41 @@ const Home = () => {
   return (
     <>
       <nav
-        class={`ui large fixed borderless menu ${darkMode ? "inverted" : ""}`}
+        className={`ui large fixed borderless menu ${
+          darkMode ? "inverted" : ""
+        }`}
       >
         <div className="item">
           <img src={logoIcon} alt="logo" height={30} />
         </div>
-        <div class="right menu">
+        <div className="right menu">
           <div className="item">
             <i className="user plus icon"></i>
           </div>
 
-          <div class="item" onClick={toggleTheme}>
+          <div className="item" onClick={toggleTheme}>
             {darkMode ? (
-              <i class="sun outline icon"></i>
+              <i className="sun outline icon"></i>
             ) : (
-              <i class="moon icon"></i>
+              <i className="moon icon"></i>
             )}
           </div>
-          <div class="item">
-            <i class="sign out alternate icon" onClick={toggleTheme}></i>
+          <div className="item">
+            <i className="sign out alternate icon" onClick={toggleTheme}></i>
           </div>
         </div>
       </nav>
+      <main style={{ marginTop: "6rem" }}>
+        <div className="container">
+          <div className="ui four column doubling stackable grid container">
+            {[...new Array(20)].map((card, i) => (
+              <div className="column" key={i}>
+                <ContactInfoCard />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     </>
   );
 };

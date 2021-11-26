@@ -40,8 +40,8 @@ const Home = () => {
       <main style={{ marginTop: "6rem" }}>
         <div className="container">
           <div className="ui four column doubling stackable grid container">
-            {[...new Array(20)].map(() => (
-              <div className="column">
+            {[...new Array(20)].map((card, i) => (
+              <div className="column" key={i}>
                 <ContactInfoCard />
               </div>
             ))}

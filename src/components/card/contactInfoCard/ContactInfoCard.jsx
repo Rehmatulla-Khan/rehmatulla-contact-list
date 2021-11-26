@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../../themeProvider/ThemeProvider";
+import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomNumberGenrator";
 
 const ContactInfoCard = () => {
   const darkMode = useTheme();
@@ -10,9 +11,8 @@ const ContactInfoCard = () => {
         <div className="ui image medium centered">
           <img
             alt="avatar"
-            src={`https://avatars.dicebear.com/api/bottts/${
-              Math.random() * (100000 - 1) + 1
-            }.svg`}
+            src={`https://avatars.dicebear.com/api/bottts/${randomNumberGenerator}
+            .svg`}
           />
         </div>
       </div>

@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import logoIcon from "../../assets/svg/logo.svg";
 import {
   useTheme,
   useThemeUpdate,
 } from "../../components/themeProvider/ThemeProvider";
 import ContactInfoCard from "../../components/card/contactInfoCard/ContactInfoCard";
+import FormCard from "../../components/card/formCard/FormCard";
 
 const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible((perV) => !perV);
+  };
 
   return (
     <>
@@ -22,7 +28,7 @@ const Home = () => {
         </div>
         <div className="right menu">
           <div className="item">
-            <i className="user plus icon"></i>
+            <i className="user plus icon" onClick={toggleFormVisibility}></i>
           </div>
 
           <div className="item" onClick={toggleTheme}>
@@ -37,6 +43,12 @@ const Home = () => {
           </div>
         </div>
       </nav>
+
+      <FormCard
+        isFormVisible={isFormVisible}
+        toggleForm={toggleFormVisibility}
+      />
+
       <main style={{ marginTop: "6rem" }}>
         <div className="container">
           <div className="ui four column doubling stackable grid container">

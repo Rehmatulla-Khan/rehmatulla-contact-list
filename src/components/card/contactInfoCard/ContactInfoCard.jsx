@@ -11,10 +11,13 @@ const ContactInfoCard = () => {
   );
 
   return (
-    <div className={`ui fluid link card  ${darkMode ? "inverted" : ""}`}>
+    <div
+      className={`ui fluid link card  ${darkMode ? "inverted" : ""}`}
+      style={{ borderRadius: "10px" }}
+    >
       <div className="ui basic segment">
-        <div className="ui image medium centered">
-          <img alt="avatar" src={imgURL} />
+        <div className="ui image small centered">
+          <img alt="avatar" src={imgURL} loading="lazy" />
         </div>
       </div>
       <div className="content">

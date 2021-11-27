@@ -6,6 +6,8 @@ import {
 } from "../../components/themeProvider/ThemeProvider";
 import ContactInfoCard from "../../components/card/contactInfoCard/ContactInfoCard";
 import FormCard from "../../components/card/formCard/FormCard";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../redux/action/auth.action";
 
 const Home = () => {
   const darkMode = useTheme();
@@ -14,6 +16,12 @@ const Home = () => {
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
+  };
+
+  const dispatch = useDispatch();
+
+  const logOutHandler = () => {
+    dispatch(logOut());
   };
 
   return (
@@ -39,7 +47,7 @@ const Home = () => {
             )}
           </div>
           <div className="item">
-            <i className="sign out alternate icon" onClick={toggleTheme}></i>
+            <i className="sign out alternate icon" onClick={logOutHandler}></i>
           </div>
         </div>
       </nav>

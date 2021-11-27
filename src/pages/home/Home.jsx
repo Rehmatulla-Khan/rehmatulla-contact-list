@@ -44,7 +44,10 @@ const Home = () => {
         </div>
       </nav>
 
-      <FormCard show={isFormVisible} toggle={toggleFormVisibility} />
+      <FormCard
+        isFormVisible={isFormVisible}
+        toggleForm={toggleFormVisibility}
+      />
 
       <main style={{ marginTop: "6rem" }}>
         <div className="container">

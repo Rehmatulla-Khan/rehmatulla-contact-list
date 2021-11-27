@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import "./formCard.css";
 
-const FormCard = ({ show, toggle }) => {
+const FormCard = ({ isFormVisible, toggleForm }) => {
   const darkMode = useTheme();
 
   const {
@@ -20,27 +20,26 @@ const FormCard = ({ show, toggle }) => {
       data.contact &&
       data.email &&
       data.status &&
-      toggle();
+      reset();
+    toggleForm();
   };
 
   const onCancel = () => {
-    toggle();
+    toggleForm();
     reset();
   };
 
   return (
     <div
       className={`ui dimmer modals page transition ${
-        show ? "visible active" : "hidden"
+        isFormVisible ? "visible active" : "hidden"
       } `}
-      onClick={toggle}
-      ref={(el) =>
-        el && show && el.style.setProperty("display", "flex", "important")
-      }
+      onClick={toggleForm}
+      ref={(el) => el && el.style.setProperty("display", "flex", "important")}
     >
       <div
         className={`ui standard test modal front transition ${
-          show ? "visible active" : "hidden"
+          isFormVisible ? "visible active" : "hidden"
         }`}
       >
         <div

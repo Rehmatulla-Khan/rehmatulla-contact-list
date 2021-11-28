@@ -7,8 +7,6 @@ export const login = () => async (dispatch) => {
     const provider = new firebase.auth.GoogleAuthProvider();
     const response = await auth.signInWithPopup(provider);
 
-    console.log(response);
-
     const profile = {
       user: response.additionalUserInfo.profile.name,
       email: response.additionalUserInfo.profile.email,

@@ -1,21 +1,31 @@
 import * as actionTypes from "../actionType";
 
 const initialState = {
-  data: null,
+  data: [],
+  loading: false,
+  error: null,
 };
 
-export const postDataReducer = (prevState = initialState, action) => {
+export const contactDataReducer = (prevState = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.POST_DATA:
+    case actionTypes.GET_CONTACT_START:
       return {
         ...prevState,
+        loading: true,
       };
-    case actionTypes.GET_DATA:
+    case actionTypes.GET_CONTACT_SUCCESS:
       return {
         ...prevState,
         data: payload,
+        loading: false,
+      };
+    case actionTypes.GET_CONTACT_FAILED:
+      return {
+        ...prevState,
+        error: payload,
+        loading: false,
       };
 
     default:

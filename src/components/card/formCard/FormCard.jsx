@@ -1,15 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { contactDataReducer } from "../../../redux/action/contactData.action";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import "./formCard.css";
 
 const FormCard = ({ isFormVisible, toggleForm }) => {
   const darkMode = useTheme();
 
-  const { id } = useSelector((state) => state.auth);
+  // const { id } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -18,16 +15,13 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
     reset,
   } = useForm();
 
-  const dispatch = useDispatch();
-
   const onFormSubmit = (data) => {
     data.firstName &&
       data.lastName &&
       data.contact &&
       data.email &&
       data.status &&
-      dispatch(contactDataReducer(data, id));
-    reset();
+      reset();
     toggleForm();
   };
 

@@ -18,6 +18,7 @@ export const authReducer = (prevState = initialState, action) => {
         accessToken: payload.accessToken,
         user: payload.user,
         email: payload.email,
+        id: payload.id,
       };
 
     case actionTypes.LOGIN_FAIL:

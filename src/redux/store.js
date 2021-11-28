@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/auth.reducer";
-import { contactDataReducer } from "./action/contactData.action";
+import { contactDataReducer } from "./reducers/contactData.reducer";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({

@@ -1,11 +1,10 @@
 import Home from "./pages/home/Home";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "./components/themeProvider/ThemeProvider";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Login from "./pages/login/Login";
-import { useDispatch } from "react-redux";
 
 const App = () => {
   const history = useHistory();
@@ -19,8 +18,6 @@ const App = () => {
       history.push("/");
     }
   }, [accessToken, history]);
-
-  const dispatch = useDispatch();
 
   return (
     <Switch>

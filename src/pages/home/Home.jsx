@@ -9,13 +9,14 @@ import FormCard from "../../components/card/formCard/FormCard";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/action/auth.action";
 import { useSelector } from "react-redux";
-import { postDataReducer } from "../../redux/reducers/contactData.reducer";
+import { getContact } from "../../redux/action/contactData.action";
 
 const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const contactData = useSelector((state) => state.contactData.data);
+  const { id } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
@@ -28,9 +29,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch();
+    dispatch(getContact(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(contactData);
+
   return (
     <>
       <nav

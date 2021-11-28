@@ -1,42 +1,25 @@
 import axios from "axios";
 import * as actionTypes from "../actionType";
 
-export const contactDataReducer = (contactData, id) => async (dispatch) => {
+export const getContact = (id) => async (dispatch) => {
   try {
-    const contactDetails = {
-      firstName: contactData.firstName,
-      lastName: contactData.lastName,
-      contact: contactData.contact,
-      email: contactData.email,
-      status: contactData.status,
-    };
-
-    await axios.post(
-      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${id}.json`,
-      {
-        ...contactDetails,
-      }
-    );
-
-    const response = await axios.get(
-      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${id}.json`
-    );
-
-    const keys = Object.keys(response.data);
-    const contactInfo = keys.map((key) => ({ ...response.data[key], id: key }));
-
-    console.log(contactInfo);
-
     dispatch({
-      type: actionTypes.POST_DATA,
-      payload: contactDetails,
+      type: actionTypes.GET_CONTACT_START,
     });
+    const { data } = await axios.get(
+      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/114297794016620175137.json`
+    );
+
+    const contacts = Object.keys(data).map((item) => data[item]);
 
     dispatch({
-      type: actionTypes.GET_DATA,
-      payload: contactInfo,
+      type: actionTypes.GET_CONTACT_SUCCESS,
+      payload: contacts,
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: actionTypes.GET_CONTACT_FAILED,
+      payload: error,
+    });
   }
 };

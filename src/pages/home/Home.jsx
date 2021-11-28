@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logoIcon from "../../assets/svg/logo.svg";
 import {
   useTheme,
@@ -8,11 +8,14 @@ import ContactInfoCard from "../../components/card/contactInfoCard/ContactInfoCa
 import FormCard from "../../components/card/formCard/FormCard";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/action/auth.action";
+import { useSelector } from "react-redux";
+import { postDataReducer } from "../../redux/reducers/contactData.reducer";
 
 const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const contactData = useSelector((state) => state.contactData.data);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
@@ -24,6 +27,10 @@ const Home = () => {
     dispatch(logOut());
   };
 
+  useEffect(() => {
+    dispatch();
+  }, []);
+  console.log(contactData);
   return (
     <>
       <nav
@@ -59,10 +66,10 @@ const Home = () => {
 
       <main style={{ marginTop: "6rem" }}>
         <div className="container">
-          <div className="ui four column doubling stackable grid container">
-            {[...new Array(20)].map((card, i) => (
-              <div className="column" key={i}>
-                <ContactInfoCard />
+          <div className="container grid ui four column doubling stackable">
+            {contactData?.map((contact) => (
+              <div className="column" key={contact.id}>
+                <ContactInfoCard contactInfo={contact} />
               </div>
             ))}
           </div>

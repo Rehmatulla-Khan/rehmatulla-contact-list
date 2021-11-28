@@ -1,10 +1,11 @@
 import * as actionTypes from "../actionType";
 
+const sessionData = JSON.parse(sessionStorage.getItem("contact-app-user"));
+
 const initialState = {
   accessToken: sessionStorage.getItem("contact-app-access-token"),
-  user: sessionStorage.getItem("contact-app-user")
-    ? JSON.parse(sessionStorage.getItem("contact-app-user"))
-    : null,
+  userName: sessionData ? sessionData.user : null,
+  id: sessionData ? sessionData.id : null,
 };
 
 export const authReducer = (prevState = initialState, action) => {

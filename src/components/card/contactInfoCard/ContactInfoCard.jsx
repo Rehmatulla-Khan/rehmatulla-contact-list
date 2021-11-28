@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomNumberGenrator";
 
-const ContactInfoCard = () => {
+const ContactInfoCard = ({ contactInfo }) => {
   const darkMode = useTheme();
   const imgURL = useMemo(
     () =>

@@ -13,6 +13,7 @@ export const login = () => async (dispatch) => {
       user: response.additionalUserInfo.profile.name,
       email: response.additionalUserInfo.profile.email,
       accessToken: response.credential.accessToken,
+      id: response.additionalUserInfo.profile.id,
     };
     dispatch({
       type: actionTypes.LOGIN_SUCCESS,
@@ -21,8 +22,6 @@ export const login = () => async (dispatch) => {
 
     sessionStorage.setItem("contact-app-access-token", profile.accessToken);
     sessionStorage.setItem("contact-app-user", JSON.stringify(profile));
-
-    console.log(profile);
   } catch (error) {
     dispatch({
       type: actionTypes.LOGIN_FAIL,

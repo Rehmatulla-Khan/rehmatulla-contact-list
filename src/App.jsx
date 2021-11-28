@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Login from "./pages/login/Login";
+import { useDispatch } from "react-redux";
 
 const App = () => {
   const history = useHistory();
@@ -19,6 +20,8 @@ const App = () => {
     }
   }, [accessToken, history]);
 
+  const dispatch = useDispatch();
+
   return (
     <Switch>
       <Route path="/auth" exact>
@@ -31,9 +34,7 @@ const App = () => {
         </ThemeProvider>
       </Route>
 
-      <Route>
-        <Redirect to="/" />
-      </Route>
+      {/* <Redirect to="/" /> */}
     </Switch>
   );
 };

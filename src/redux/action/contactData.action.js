@@ -6,11 +6,22 @@ export const getContact = (id) => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_CONTACT_START,
     });
+
+    console.log("mezab", id);
     const { data } = await axios.get(
-      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/114297794016620175137.json`
+      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${id}.json`
     );
 
-    const contacts = Object.keys(data).map((item) => data[item]);
+    if (!data) {
+      dispatch({
+        type: actionTypes.NO_CONTACTS_IN_DATABASE,
+      });
+      return;
+    }
+    const contacts = Object.keys(data).map((item) => ({
+      ...data[item],
+      key: item,
+    }));
 
     dispatch({
       type: actionTypes.GET_CONTACT_SUCCESS,
@@ -20,6 +31,57 @@ export const getContact = (id) => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_CONTACT_FAILED,
       payload: error,
+    });
+  }
+};
+
+export const addContact = (userId, formData, imgURL) => async (dispatch) => {
+  dispatch({
+    type: actionTypes.ADD_CONTACT_START,
+  });
+
+  const contactDetails = { ...formData, imgURL };
+
+  await axios.post(
+    `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${userId}.json`,
+    {
+      ...contactDetails,
+    }
+  );
+
+  try {
+    dispatch({
+      type: actionTypes.ADD_CONTACT_SUCCESS,
+      payload: contactDetails,
+    });
+    dispatch(getContact(userId));
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_CONTACT_FAILED,
+      payload: error.message,
+    });
+  }
+};
+
+export const deleteContact = (userId, contactId) => async (dispatch) => {
+  dispatch({
+    type: actionTypes.DELETE_CONTACT_START,
+  });
+
+  try {
+    await axios.delete(
+      `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${userId}/${contactId}.json`
+    );
+
+    dispatch({
+      type: actionTypes.DELETE_CONTACT_SUCCESS,
+    });
+
+    await dispatch(getContact(userId));
+  } catch (error) {
+    dispatch({
+      type: actionTypes.DELETE_CONTACT_FAILED,
+      payload: error.message,
     });
   }
 };

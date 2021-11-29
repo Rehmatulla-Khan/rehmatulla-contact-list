@@ -1,12 +1,20 @@
 import React from "react";
+import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomNumberGenrator";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addContact } from "../../../redux/action/contactData.action";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import "./formCard.css";
 
 const FormCard = ({ isFormVisible, toggleForm }) => {
   const darkMode = useTheme();
 
-  // const { id } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.auth);
+
+  const imgURL = `https://avatars.dicebear.com/api/bottts/${randomNumberGenerator()}.svg`;
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -21,7 +29,8 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
       data.contact &&
       data.email &&
       data.status &&
-      reset();
+      dispatch(addContact(id, data, imgURL));
+    reset();
     toggleForm();
   };
 

@@ -1,14 +1,22 @@
-import React, { useMemo } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../../redux/action/contactData.action";
 import { useTheme } from "../../themeProvider/ThemeProvider";
-import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomNumberGenrator";
 
 const ContactInfoCard = ({ contactInfo }) => {
   const darkMode = useTheme();
-  const imgURL = useMemo(
-    () =>
-      `https://avatars.dicebear.com/api/bottts/${randomNumberGenerator()}.svg`,
-    []
-  );
+
+  const { id } = useSelector((state) => state.auth);
+
+  const { firstName, lastName, contact, email, imgURL, key } = contactInfo;
+
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteContact(id, key));
+    // dispatch(getContact(id));
+  };
 
   return (
     <div
@@ -21,18 +29,20 @@ const ContactInfoCard = ({ contactInfo }) => {
         </div>
       </div>
       <div className="content">
-        <div className="header">Matt Giampietro</div>
-        <div className="meta">
-          <p>9702462589</p>
+        <div className="header">
+          {firstName} {lastName}
         </div>
-        <div className="description">k.rehmatulla22@gmail.com</div>
+        <div className="meta">
+          <p>{contact}</p>
+        </div>
+        <div className="description">{email}</div>
       </div>
       <div className="extra content">
         <span className="right floated">
           <i className="edit icon"></i>
         </span>
         <span>
-          <i className="trash icon"></i>
+          <i className="trash icon" onClick={handleDelete}></i>
         </span>
       </div>
     </div>

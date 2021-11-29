@@ -1,5 +1,5 @@
 import Home from "./pages/home/Home";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { ThemeProvider } from "./components/themeProvider/ThemeProvider";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -21,17 +21,17 @@ const App = () => {
 
   return (
     <Switch>
-      <Route path="/auth" exact>
-        <Login />
-      </Route>
-
       <Route path="/" exact>
         <ThemeProvider>
           <Home />
         </ThemeProvider>
       </Route>
 
-      {/* <Redirect to="/" /> */}
+      <Route path="/auth" exact>
+        <Login />
+      </Route>
+
+      <Redirect to="/" />
     </Switch>
   );
 };

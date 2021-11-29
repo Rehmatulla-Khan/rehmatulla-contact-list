@@ -15,8 +15,8 @@ const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const contactData = useSelector((state) => state.contactData.data);
-  const { id } = useSelector((state) => state.auth);
+  const { data } = useSelector((state) => state.contactData);
+  const { id, accessToken } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
@@ -29,8 +29,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(getContact(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (accessToken) {
+      dispatch(getContact(id));
+    }
   }, []);
 
   return (
@@ -69,8 +70,8 @@ const Home = () => {
       <main style={{ marginTop: "6rem" }}>
         <div className="container">
           <div className="container grid ui four column doubling stackable">
-            {contactData?.map((contact) => (
-              <div className="column" key={contact.id}>
+            {data?.map((contact, i) => (
+              <div className="column" key={i}>
                 <ContactInfoCard contactInfo={contact} />
               </div>
             ))}

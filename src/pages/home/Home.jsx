@@ -16,7 +16,7 @@ const Home = () => {
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const { data } = useSelector((state) => state.contactData);
-  const { id, accessToken } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
@@ -29,9 +29,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (accessToken) {
-      dispatch(getContact(id));
-    }
+    dispatch(getContact(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

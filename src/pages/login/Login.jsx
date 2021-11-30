@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { useDispatch } from "react-redux";
+
 import logo from "../../assets/svg/logo.svg";
 import { login } from "../../redux/action/auth.action";
 

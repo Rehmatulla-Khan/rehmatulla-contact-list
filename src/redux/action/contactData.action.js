@@ -7,7 +7,6 @@ export const getContact = (id) => async (dispatch) => {
       type: actionTypes.GET_CONTACT_START,
     });
 
-    console.log("mezab", id);
     const { data } = await axios.get(
       `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${id}.json`
     );

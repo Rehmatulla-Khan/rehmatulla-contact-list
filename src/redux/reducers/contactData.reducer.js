@@ -77,6 +77,6 @@ export const contactDataReducer = (prevState = initialState, action) => {
       };
 
     default:
-      return initialState;
+      return prevState;
   }
 };

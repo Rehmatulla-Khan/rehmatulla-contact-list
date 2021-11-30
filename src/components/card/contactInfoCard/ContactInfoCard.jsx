@@ -38,7 +38,10 @@ const ContactInfoCard = ({ contactInfo }) => {
         <div className="description">{email}</div>
       </div>
       <div className="extra content">
-        <span className="right floated">
+        <span
+          className="right floated"
+          onClick={() => console.log(contactInfo)}
+        >
           <i className="edit icon"></i>
         </span>
         <span>

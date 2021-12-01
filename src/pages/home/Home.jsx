@@ -15,6 +15,8 @@ const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const [contactId, setContactId] = useState("");
   const { data } = useSelector((state) => state.contactData);
   const { id } = useSelector((state) => state.auth);
 
@@ -22,6 +24,9 @@ const Home = () => {
     setIsFormVisible((perV) => !perV);
   };
 
+  const toggleEditForm = () => {
+    setIsEditFormVisible((perV) => !perV);
+  };
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
@@ -32,6 +37,12 @@ const Home = () => {
     dispatch(getContact(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getContactId = (contactId) => {
+    setContactId(contactId);
+  };
+
+  const contactData = data.filter((contact) => contact.contactId === contactId);
 
   return (
     <>
@@ -64,6 +75,9 @@ const Home = () => {
       <FormCard
         isFormVisible={isFormVisible}
         toggleForm={toggleFormVisibility}
+        contactData={contactData}
+        toggleEditForm={toggleEditForm}
+        isEditFormVisible={isEditFormVisible}
       />
 
       <main style={{ marginTop: "6rem" }}>
@@ -71,7 +85,11 @@ const Home = () => {
           <div className="container grid ui four column doubling stackable">
             {data?.map((contact, i) => (
               <div className="column" key={i}>
-                <ContactInfoCard contactInfo={contact} />
+                <ContactInfoCard
+                  contactInfo={contact}
+                  toggleEditForm={toggleEditForm}
+                  getContactId={getContactId}
+                />
               </div>
             ))}
           </div>

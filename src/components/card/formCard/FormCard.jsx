@@ -3,11 +3,22 @@ import { randomNumberGenerator } from "../../utils/randomNumberGenerator/randomN
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { addContact } from "../../../redux/action/contactData.action";
+import {
+  addContact,
+  editContact,
+} from "../../../redux/action/contactData.action";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 import "./formCard.css";
 
-const FormCard = ({ isFormVisible, toggleForm }) => {
+const FormCard = ({
+  isFormVisible,
+  toggleForm,
+  contactData,
+  isEditFormVisible,
+  toggleEditForm,
+}) => {
+  const contactDetails = contactData[0];
+
   const darkMode = useTheme();
 
   const { id } = useSelector((state) => state.auth);
@@ -25,31 +36,35 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
 
   const onFormSubmit = (data) => {
     data.firstName &&
-      data.lastName &&
-      data.contact &&
-      data.email &&
-      data.status &&
-      dispatch(addContact(id, data, imgURL));
+    data.lastName &&
+    data.contact &&
+    data.email &&
+    data.status &&
+    isFormVisible
+      ? dispatch(addContact(id, data, imgURL))
+      : dispatch(
+          editContact(id, contactDetails.contactId, data, contactDetails.imgURL)
+        );
     reset();
-    toggleForm();
+    isFormVisible ? toggleForm() : toggleEditForm();
   };
 
   const onCancel = () => {
-    toggleForm();
+    isFormVisible ? toggleForm() : toggleEditForm();
     reset();
   };
 
   return (
     <div
       className={`ui dimmer modals page transition ${
-        isFormVisible ? "visible active" : "hidden"
+        isFormVisible || isEditFormVisible ? "visible active" : "hidden"
       } `}
       onClick={toggleForm}
       ref={(el) => el && el.style.setProperty("display", "flex", "important")}
     >
       <div
         className={`ui standard test modal front transition ${
-          isFormVisible ? "visible active" : "hidden"
+          isFormVisible || isEditFormVisible ? "visible active" : "hidden"
         }`}
       >
         <div
@@ -64,6 +79,12 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
               <label>First Name</label>
               <input
                 type="text"
+                name="firstName"
+                defaultValue={
+                  isEditFormVisible && contactDetails
+                    ? contactDetails.firstName
+                    : ""
+                }
                 placeholder="First Name"
                 {...register("firstName", { required: true })}
               />
@@ -77,6 +98,12 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
               <label>Last Name</label>
               <input
                 type="text"
+                name="lastName"
+                defaultValue={
+                  isEditFormVisible && contactDetails
+                    ? contactDetails.lastName
+                    : ""
+                }
                 placeholder="Last Name"
                 {...register("lastName", { required: true })}
               />
@@ -90,6 +117,12 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
               <label>Contact</label>
               <input
                 type="number"
+                name="contact"
+                defaultValue={
+                  isEditFormVisible && contactDetails
+                    ? contactDetails.contact
+                    : ""
+                }
                 maxLength="10"
                 placeholder="9894747322"
                 {...register("contact", { required: true })}
@@ -104,6 +137,12 @@ const FormCard = ({ isFormVisible, toggleForm }) => {
               <input
                 type="email"
                 placeholder="test@test.com"
+                name="email"
+                defaultValue={
+                  isEditFormVisible && contactDetails
+                    ? contactDetails.email
+                    : ""
+                }
                 {...register("email", {
                   required: true,
                   pattern:

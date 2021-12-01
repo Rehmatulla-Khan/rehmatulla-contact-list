@@ -12,7 +12,16 @@ const Login = () => {
   };
 
   return (
-    <div className="ui card" style={{ padding: "2rem", margin: "12rem auto" }}>
+    <div
+      className="ui card"
+      style={{
+        padding: "2rem",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%,-50%)",
+      }}
+    >
       <div className="image">
         <img src={logo} alt="logo" />
       </div>

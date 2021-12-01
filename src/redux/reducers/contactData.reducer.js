@@ -60,6 +60,22 @@ export const contactDataReducer = (prevState = initialState, action) => {
         error: payload,
       };
 
+    case actionTypes.EDIT_CONTACT_START:
+      return {
+        ...prevState,
+      };
+
+    case actionTypes.EDIT_CONTACT_SUCCESS:
+      return {
+        ...prevState,
+      };
+
+    case actionTypes.EDIT_CONTACT_FAILED:
+      return {
+        ...prevState,
+        error: payload,
+      };
+
     case actionTypes.DELETE_CONTACT_START:
       return {
         ...prevState,

@@ -3,26 +3,27 @@ import auth from "../../firebase";
 import * as actionTypes from "../actionType";
 
 export const login = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.LOGIN_REQUEST,
+  });
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
     const response = await auth.signInWithPopup(provider);
-
-    console.log(response);
 
     const profile = {
       user: response.additionalUserInfo.profile.name,
       email: response.additionalUserInfo.profile.email,
       accessToken: response.credential.accessToken,
+      id: response.additionalUserInfo.profile.id,
     };
-    dispatch({
-      type: actionTypes.LOGIN_SUCCESS,
-      payload: profile,
-    });
 
     sessionStorage.setItem("contact-app-access-token", profile.accessToken);
     sessionStorage.setItem("contact-app-user", JSON.stringify(profile));
 
-    console.log(profile);
+    dispatch({
+      type: actionTypes.LOGIN_SUCCESS,
+      payload: profile,
+    });
   } catch (error) {
     dispatch({
       type: actionTypes.LOGIN_FAIL,

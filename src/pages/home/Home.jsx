@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logoIcon from "../../assets/svg/logo.svg";
 import {
   useTheme,
@@ -8,11 +8,15 @@ import ContactInfoCard from "../../components/card/contactInfoCard/ContactInfoCa
 import FormCard from "../../components/card/formCard/FormCard";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/action/auth.action";
+import { useSelector } from "react-redux";
+import { getContact } from "../../redux/action/contactData.action";
 
 const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const { data } = useSelector((state) => state.contactData);
+  const { id } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
@@ -23,6 +27,11 @@ const Home = () => {
   const logOutHandler = () => {
     dispatch(logOut());
   };
+
+  useEffect(() => {
+    dispatch(getContact(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -59,10 +68,10 @@ const Home = () => {
 
       <main style={{ marginTop: "6rem" }}>
         <div className="container">
-          <div className="ui four column doubling stackable grid container">
-            {[...new Array(20)].map((card, i) => (
+          <div className="container grid ui four column doubling stackable">
+            {data?.map((contact, i) => (
               <div className="column" key={i}>
-                <ContactInfoCard />
+                <ContactInfoCard contactInfo={contact} />
               </div>
             ))}
           </div>

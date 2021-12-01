@@ -21,19 +21,17 @@ const App = () => {
 
   return (
     <Switch>
-      <Route path="/auth" exact>
-        <Login />
-      </Route>
-
       <Route path="/" exact>
         <ThemeProvider>
           <Home />
         </ThemeProvider>
       </Route>
 
-      <Route>
-        <Redirect to="/" />
+      <Route path="/auth" exact>
+        <Login />
       </Route>
+
+      <Redirect to="/" />
     </Switch>
   );
 };

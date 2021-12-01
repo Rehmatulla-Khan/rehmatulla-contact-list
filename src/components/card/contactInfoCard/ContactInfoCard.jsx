@@ -4,17 +4,18 @@ import { useDispatch } from "react-redux";
 import { deleteContact } from "../../../redux/action/contactData.action";
 import { useTheme } from "../../themeProvider/ThemeProvider";
 
-const ContactInfoCard = ({ contactInfo }) => {
+const ContactInfoCard = ({ contactInfo, toggleEditForm, getContactId }) => {
   const darkMode = useTheme();
 
   const { id } = useSelector((state) => state.auth);
 
-  const { firstName, lastName, contact, email, imgURL, key } = contactInfo;
+  const { firstName, lastName, contact, email, imgURL, contactId, status } =
+    contactInfo;
 
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteContact(id, key));
+    dispatch(deleteContact(id, contactId));
     // dispatch(getContact(id));
   };
 
@@ -31,6 +32,7 @@ const ContactInfoCard = ({ contactInfo }) => {
       <div className="content">
         <div className="header">
           {firstName} {lastName}
+          <p style={{ color: "grey" }}>{status}</p>
         </div>
         <div className="meta">
           <p>{contact}</p>
@@ -40,12 +42,15 @@ const ContactInfoCard = ({ contactInfo }) => {
       <div className="extra content">
         <span
           className="right floated"
-          onClick={() => console.log(contactInfo)}
+          onClick={() => {
+            toggleEditForm();
+            getContactId(contactId);
+          }}
         >
           <i className="edit icon"></i>
         </span>
-        <span>
-          <i className="trash icon" onClick={handleDelete}></i>
+        <span onClick={handleDelete}>
+          <i className="trash icon"></i>
         </span>
       </div>
     </div>

@@ -10,18 +10,24 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/action/auth.action";
 import { useSelector } from "react-redux";
 import { getContact } from "../../redux/action/contactData.action";
+import Loader from "../../components/loader/Loader";
 
 const Home = () => {
   const darkMode = useTheme();
   const toggleTheme = useThemeUpdate();
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const { data } = useSelector((state) => state.contactData);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const [contactId, setContactId] = useState("");
+  const { data, loading } = useSelector((state) => state.contactData);
   const { id } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((perV) => !perV);
   };
 
+  const toggleEditForm = () => {
+    setIsEditFormVisible((perV) => !perV);
+  };
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
@@ -32,6 +38,12 @@ const Home = () => {
     dispatch(getContact(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getContactId = (contactId) => {
+    setContactId(contactId);
+  };
+
+  const contactData = data.filter((contact) => contact.contactId === contactId);
 
   return (
     <>
@@ -64,19 +76,30 @@ const Home = () => {
       <FormCard
         isFormVisible={isFormVisible}
         toggleForm={toggleFormVisibility}
+        contactData={contactData}
+        toggleEditForm={toggleEditForm}
+        isEditFormVisible={isEditFormVisible}
       />
 
-      <main style={{ marginTop: "6rem" }}>
-        <div className="container">
-          <div className="container grid ui four column doubling stackable">
-            {data?.map((contact, i) => (
-              <div className="column" key={i}>
-                <ContactInfoCard contactInfo={contact} />
-              </div>
-            ))}
+      {loading ? (
+        <Loader />
+      ) : (
+        <main style={{ marginTop: "6rem" }}>
+          <div className="container">
+            <div className="container grid ui four column doubling stackable">
+              {data?.map((contact, i) => (
+                <div className="column" key={i}>
+                  <ContactInfoCard
+                    contactInfo={contact}
+                    toggleEditForm={toggleEditForm}
+                    getContactId={getContactId}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
     </>
   );
 };

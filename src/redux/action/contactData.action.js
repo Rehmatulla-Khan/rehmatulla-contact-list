@@ -19,7 +19,7 @@ export const getContact = (id) => async (dispatch) => {
     }
     const contacts = Object.keys(data).map((item) => ({
       ...data[item],
-      key: item,
+      contactId: item,
     }));
 
     dispatch({
@@ -84,3 +84,31 @@ export const deleteContact = (userId, contactId) => async (dispatch) => {
     });
   }
 };
+
+export const editContact =
+  (userId, contactId, contactUpdateInfo, imgURL) => async (dispatch) => {
+    dispatch({
+      type: actionTypes.EDIT_CONTACT_START,
+    });
+
+    try {
+      await axios.put(
+        `https://rehmatulla-contact-app-default-rtdb.firebaseio.com/contacts/${userId}/${contactId}.json`,
+        {
+          ...contactUpdateInfo,
+          imgURL,
+        }
+      );
+
+      dispatch({
+        type: actionTypes.EDIT_CONTACT_SUCCESS,
+      });
+
+      await dispatch(getContact(userId));
+    } catch (error) {
+      dispatch({
+        type: actionTypes.EDIT_CONTACT_FAILED,
+        payload: error.message,
+      });
+    }
+  };

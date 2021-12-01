@@ -12,11 +12,16 @@ export const useThemeUpdate = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const userMode = localStorage.getItem("user-choosen-mode")
+    ? JSON.parse(localStorage.getItem("user-choosen-mode"))
+    : false;
+
+  const [darkMode, setDarkMode] = useState(userMode);
 
   const toggleMode = () => {
     setDarkMode((preMode) => !preMode);
   };
+  localStorage.setItem("user-choosen-mode", JSON.stringify(darkMode));
 
   return (
     <ThemeContext.Provider value={darkMode}>

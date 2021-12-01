@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/action/auth.action";
 import { useSelector } from "react-redux";
 import { getContact } from "../../redux/action/contactData.action";
+import Loader from "../../components/loader/Loader";
 
 const Home = () => {
   const darkMode = useTheme();
@@ -17,7 +18,7 @@ const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [contactId, setContactId] = useState("");
-  const { data } = useSelector((state) => state.contactData);
+  const { data, loading } = useSelector((state) => state.contactData);
   const { id } = useSelector((state) => state.auth);
 
   const toggleFormVisibility = () => {
@@ -80,21 +81,25 @@ const Home = () => {
         isEditFormVisible={isEditFormVisible}
       />
 
-      <main style={{ marginTop: "6rem" }}>
-        <div className="container">
-          <div className="container grid ui four column doubling stackable">
-            {data?.map((contact, i) => (
-              <div className="column" key={i}>
-                <ContactInfoCard
-                  contactInfo={contact}
-                  toggleEditForm={toggleEditForm}
-                  getContactId={getContactId}
-                />
-              </div>
-            ))}
+      {loading ? (
+        <Loader />
+      ) : (
+        <main style={{ marginTop: "6rem" }}>
+          <div className="container">
+            <div className="container grid ui four column doubling stackable">
+              {data?.map((contact, i) => (
+                <div className="column" key={i}>
+                  <ContactInfoCard
+                    contactInfo={contact}
+                    toggleEditForm={toggleEditForm}
+                    getContactId={getContactId}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
     </>
   );
 };
